@@ -1,0 +1,219 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login V13</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="../../Content/Login/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../../Content/Login/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../../Content/Login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../../Content/Login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../../Content/Login/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../../Content/Login/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../../Content/Login/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../../Content/Login/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../../Content/Login/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../../Content/Login/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../../Content/Login/css/util.css">
+    <link rel="stylesheet" type="text/css" href="../../Content/Login/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<body style="background-color: #fff;">
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="login100-more" style="background-image: url('../../Content/Login/images/bg-01.jpg');"></div>
+
+            <div style=" margin:auto; vertical-align:middle; overflow: hidden;" class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
+                <form class="login100-form validate-form">
+                    <span class="login100-form-title p-b-59">
+                        Giriş Yap
+                    </span>
+
+                    <div class="wrap-input100 validate-input" data-validate="Tc No is required">
+                        <span class="label-input100">Tc Numarası *</span>
+                        <input class="input100" id="tc" maxlength="11" type="text" name="TcNo" placeholder="Tc Numarası...">
+                        <span class="focus-input100"></span><div id="uyari"></div>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                        <span class="label-input100">Password *</span>
+                        <input class="input100" id="sifre" type="password" maxlength="8" name="pass" placeholder="*************">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button id="btnGiris" class="login100-form-btn">
+                                Giriş Yap
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!--===============================================================================================-->
+    <script src="../../Content/Login/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="../../Content/Login/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="../../Content/Login/vendor/bootstrap/js/popper.js"></script>
+    <script src="../../Content/Login/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="../../Content/Login/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="../../Content/Login/vendor/daterangepicker/moment.min.js"></script>
+    <script src="../../Content/Login/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="../../Content/Login/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="../../Content/Login/js/main.js"></script>
+
+
+
+
+
+    <script src="~/Scripts/bootstrap.js"></script>
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            var isSuccess = false;
+
+            $("#btnGiris").click(function () {
+                var TCKN = $("#tc").val();
+                var pass = $("#sifre").val();
+
+                var data = {
+                    TCKimlik: TCKN,
+                    parola: pass,
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: "https://bankappapi.azurewebsites.net/api/musteri?TCKimlik=" + TCKN + "&parola=" + pass,
+                    data: JSON.stringify(data),
+                    dataType: 'jsonp',
+                    crossDomain: true,
+
+                    contentType: 'application/json',
+
+                    success: function (gdata) {
+
+                        if (gdata != "") {
+                            isSuccess = true;
+                        }
+
+                    },
+                    complete: function () {
+
+                        if (isSuccess) {
+
+                            alert("başarılı giriş yaptınız...")
+
+                        } else {
+
+                            alert("hata oluştu. bilgilerinizi kontrol ederek tekrar deneyiniz!")
+
+                        }
+
+                        isSuccess = false;
+                    }
+
+                });
+
+            })
+        });
+
+        /* $("#btnGiris").click(function () {
+             var TCKN = $("#tc").val();
+             var pass = $("#sifre").val();
+
+
+             $.ajax({
+
+                 type: "POST",
+                 contentType: "application/json; charset=utf-8",
+                 url: "https://bankappapi.azurewebsites.net/api/musteri?TCKimlik=" + TCKN + "&parola=" + pass,
+                 dataType: "jsonp",
+                 data: {
+                     TCKimlik: TCKN,
+                     parola: pass,
+
+                 },
+
+                 success: function () {
+
+                     alert("asasa");
+
+
+                 },
+                 error: function (err) {
+                     alert(err);
+                 }
+             });
+         })*/
+
+    </script>
+    <script>
+
+        $(document).ready(function () {
+           
+         
+           
+            $("#tc").keypress(function (evt) {
+                var charCode = (evt.which) ? evt.which : event.keyCode
+
+                if (charCode >= 48 && charCode <= 57) {
+                    return true;
+                }
+                return false;
+            });
+
+        });
+        var nesne = document.getElementById("tc");
+         var uyari = document.getElementById("uyari");
+
+         nesne.onkeypress = function () {
+             uyari.textContent = "";
+         }
+
+         nesne.onblur = function () {
+
+             try {
+
+                 if (nesne.value.length < 11) throw "11 karakterden az girdiniz.";
+             }
+             catch (e) {
+                 uyari.textContent = e;
+                 nesne.focus();
+             }
+         }
+    </script>
+</body >
+</html >
+
+
+

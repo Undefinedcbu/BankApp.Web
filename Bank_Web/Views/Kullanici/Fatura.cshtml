@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "Fatura";
+    Layout = "~/Views/Shared/_Kullanici_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Fatura İşlemleri</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <section class="content">
+        <div class="card-header">
+            <h3 class="card-title">Fatura Sorgula</h3>
+        </div>
+
+        <form role="form">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Abone Numarası</label>
+                    <input type="Number" min="1" class="form-control" id="exampleInputEmail1" placeholder="Abone Numarası Giriniz">
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-success">Sorgula</button>
+            </div>
+
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Faturalar</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Fatura</th>
+                                <th>Fatura Tutarı</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>Abone Numarası</td>
+                                <td>173 Tl</td>
+                                <td class="text-right py-0 align-middle">
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="#" class="btn btn-success"><i class="fas fa-plus"></i>   Seç</a>
+                                    </div>
+                                </td>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- /.card-body -->
+            </div>
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Gönderici Hesap</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Hesap Numarası</th>
+                                <th>Bakiye</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hesap Numarası</td>
+                                <td>173 Tl</td>
+                                <td class="text-right py-0 align-middle">
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="#" class="btn btn-success"><i class="fas fa-plus"></i>   Seç</a>
+                                    </div>
+                                </td>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-body">
+                <button type="submit" class="btn btn-success">Fatura Öde</button>
+            </div>
+        </form>
+    </section>
+</div>
+           
+
+
+
+

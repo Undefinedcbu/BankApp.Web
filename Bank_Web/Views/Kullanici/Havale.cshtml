@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "Havale";
+    Layout = "~/Views/Shared/_Kullanici_Layout.cshtml";
+}
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Transfer İşlemleri</h1>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <!-- Default box -->
+            <div class="card-header">
+                <h3 class="card-title">Havale</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form role="form">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Miktar</label>
+                        <input type="number" min="1" class="form-control" id="exampleInputEmail1" placeholder="Miktarı Giriniz">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Alıcı Hesap Numarası</label>
+                        <input type="number" min="1" class="form-control" id="exampleInputEmail1" placeholder="Alıcı Hesap Numarası Giriniz">
+                    </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Gönderici Hesap</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Hesap Numarası</th>
+                                    <th>Bakiye</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Hesap Numarası</td>
+                                    <td>173 Tl</td>
+                                    <td class="text-right py-0 align-middle">
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="#" class="btn btn-success"><i class="fas fa-plus"></i>   Seç</a>
+                                        </div>
+                                    </td>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <div class="card-body">
+                    <button type="submit" class="btn btn-success">Gönder</button>
+                </div>
+            </form>
+        </section>
+    </div>
+    
+
+
+
