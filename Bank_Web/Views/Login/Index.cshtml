@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Bank_Web.Models.Musteri
+@{
     ViewBag.Title = "Index";
     Layout = null;
 }
@@ -7,6 +8,7 @@
 <head>
     <title>Login V13</title>
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="../../Content/Login/images/icons/favicon.ico" />
@@ -60,11 +62,22 @@
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button id="btnGiris" class="login100-form-btn">
-                                Giriş Yap
-                            </button>
-                        </div>
+                            <input type="button"
+                                   value="Giriş Yap"
+                                   class="login100-form-btn"
+                                   onclick="location.href='@Url.Action("GetUser", "Login")?TCKimlik=' + $('#tc').val() +'&parola='+$('#sifre').val()" />
 
+                        </div>
+                    </div>
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <input type="button"
+                                   value="Kayıt Ol"
+                                   class="login100-form-btn"
+                                   onclick="location.href='@Url.Action("KayitOl", "Login")'" />
+
+                        </div>
                     </div>
                 </form>
             </div>
@@ -88,64 +101,60 @@
     <script src="../../Content/Login/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
     <script src="../../Content/Login/js/main.js"></script>
-
-
-
-
-
     <script src="~/Scripts/bootstrap.js"></script>
-
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+    @Html.Hidden("RedirectTo", Url.Action("Giris", "Login"));
+    <input type="hidden" id="Token" />
+    <input type="hidden" id="TCKimlik" />
+
+
     <script src="~/Scripts/jquery-3.3.1.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-        $(function () {
+        //$("#btnGiris").click(function () {
+        //    var url = $("#RedirectTo").val();
+        //    var tc = $("#tc").val();
+        //    var parola = $("#sifre").val();
+        //    $.ajax({
+        //        url: "http://localhost:54117/token",
+        //        type: "POST",
+        //        crossDomain: true,
+        //        data: {
+        //            "username": tc,
+        //            "password": parola,
+        //            "grant_type": "password",
+        //        },
+        //        dataType: "json",
+        //        success: function (result) {
+        //            alert("Logged in successfully");
+                    
+        //            sessionStorage.setItem('Token', JSON.stringify(result.access_token));
+        //            sessionStorage.setItem('TCKimlik', tc);
+        //           // window.location.href = url;
 
-            var isSuccess = false;
+        //            $.ajax({
+        //                url: "http://localhost:54117/api/Musteri?TCKimlik="+tc,
+        //                type: "GET",
+        //                data: model,
+        //                headers: {
+        //                    "authorization":"Bearer "+result.access_token
+        //                },
+        //                dataType: "json",
+        //                success: function (res) {
+        //                    alert(" --> "+res)
+        //                },
+        //                error: function (xhr, status, error) {
+        //                    alert(status + " " + error);
+        //                }
+        //            })
 
-            $("#btnGiris").click(function () {
-                var TCKN = $("#tc").val();
-                var pass = $("#sifre").val();
-
-                var data = {
-                    TCKimlik: TCKN,
-                    parola: pass,
-                };
-                $.ajax({
-                    type: 'POST',
-                    url: "https://bankappapi.azurewebsites.net/api/musteri?TCKimlik=" + TCKN + "&parola=" + pass,
-                    data: JSON.stringify(data),
-                    dataType: 'jsonp',
-                    crossDomain: true,
-
-                    contentType: 'application/json',
-
-                    success: function (gdata) {
-
-                        if (gdata != "") {
-                            isSuccess = true;
-                        }
-
-                    },
-                    complete: function () {
-
-                        if (isSuccess) {
-
-                            alert("başarılı giriş yaptınız...")
-
-                        } else {
-
-                            alert("hata oluştu. bilgilerinizi kontrol ederek tekrar deneyiniz!")
-
-                        }
-
-                        isSuccess = false;
-                    }
-
-                });
-
-            })
-        });
+        //        },
+        //        error: function (xhr, status, error) {
+        //            alert(status + " " + error);
+        //        }
+        //    });
+        //})
 
         /* $("#btnGiris").click(function () {
              var TCKN = $("#tc").val();
@@ -180,9 +189,9 @@
     <script>
 
         $(document).ready(function () {
-           
-         
-           
+
+
+
             $("#tc").keypress(function (evt) {
                 var charCode = (evt.which) ? evt.which : event.keyCode
 
@@ -194,25 +203,25 @@
 
         });
         var nesne = document.getElementById("tc");
-         var uyari = document.getElementById("uyari");
+        var uyari = document.getElementById("uyari");
 
-         nesne.onkeypress = function () {
-             uyari.textContent = "";
-         }
+        nesne.onkeypress = function () {
+            uyari.textContent = "";
+        }
 
-         nesne.onblur = function () {
+        nesne.onblur = function () {
 
-             try {
+            try {
 
-                 if (nesne.value.length < 11) throw "11 karakterden az girdiniz.";
-             }
-             catch (e) {
-                 uyari.textContent = e;
-                 nesne.focus();
-             }
-         }
+                if (nesne.value.length < 11) throw "11 karakterden az girdiniz.";
+            }
+            catch (e) {
+                uyari.textContent = e;
+                nesne.focus();
+            }
+        }
     </script>
-</body >
+</body>
 </html >
 
 

@@ -1,109 +1,173 @@
-﻿
+﻿@using Bank_Web.Models
+
 @{
     ViewBag.Title = "Virman";
     Layout = "~/Views/Shared/_Kullanici_Layout.cshtml";
 }
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1>Transfer İşlemleri</h1>
-                        </div>
-                    </div>
-                </div><!-- /.container-fluid -->
-            </section>
-
-            <!-- Main content -->
-            <section class="content">
-
-                <!-- Default box -->
-                <div class="card-header">
-                    <h3 class="card-title">Virman</h3>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Transfer İşlemleri</h1>
                 </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form role="form">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Miktar</label>
-                            <input type="number" min="1" class="form-control" id="exampleInputEmail1" placeholder="Miktarı Giriniz">
-                        </div>
-                    </div>
-                    <div class="card card-info">
-                        <div class="card-header">
-                            <h3 class="card-title">Gönderici Hesap</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body p-0">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Hesap Numarası</th>
-                                        <th>Bakiye</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Hesap Numarası</td>
-                                        <td>173 Tl</td>
-                                        <td class="text-right py-0 align-middle">
-                                            <div class="btn-group btn-group-sm">
-                                                <a href="#" class="btn btn-success"><i class="fas fa-plus"></i>   Seç</a>
-                                            </div>
-                                        </td>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
 
-                                </tbody>
-                            </table>
-                        </div>
+    <!-- Main content -->
+    <section class="content">
 
-
-                        <!-- /.card-body -->
-                        <!-- /.card-body -->
-
-                    </div>
-                    <div class="card card-info">
-                        <div class="card-header">
-                            <h3 class="card-title">Alıcı Hesap</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body p-0">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Hesap Numarası</th>
-                                        <th>Bakiye</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Hesap Numarası</td>
-                                        <td>173 Tl</td>
-                                        <td class="text-right py-0 align-middle">
-                                            <div class="btn-group btn-group-sm">
-                                                <a href="#" class="btn btn-success"><i class="fas fa-plus"></i>   Seç</a>
-                                            </div>
-                                        </td>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <button type="submit" class="btn btn-success">Gönder</button>
-                    </div>
-                </form>
-                </section>
+        <!-- Default box -->
+        <div class="card-header">
+            <h3 class="card-title">Virman</h3>
         </div>
-       
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form role="form">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Miktar</label>
+                    <input type="number" min="1" class="form-control" id="miktar" placeholder="Miktarı Giriniz">
+                </div>
+            </div>
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Gönderici Hesap</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Hesap Numarası</th>
+                                <th>Bakiye</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (Globals.musteri.Hesaplar != null)
+                            {
+                                foreach (var item in Globals.musteri.Hesaplar)
+                                {
+                                    if (item.Durum == "Açık")
+                                    {
+                                        <tr>
+                                            <td>@item.HesapNo</td>
+                                            <td>@item.Bakiye</td>
+                                            <td class="text-right py-0 align-middle">
+                                                <div class="btn-group btn-group-sm">
+                                                    @*<input id="item_CheckerApproved_@item.HesapNo" type="radio" value="@item.HesapNo" name="GonderenHesapNo">*@
+
+                                                    @Html.RadioButton("AliciHesapNo", @item.HesapNo)
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                }
+                            }
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+                <!-- /.card-body -->
+                <!-- /.card-body -->
+
+            </div>
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Alıcı Hesap</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Hesap Numarası</th>
+                                <th>Bakiye</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (Globals.musteri.Hesaplar != null)
+                            {
+                                foreach (var item in Globals.musteri.Hesaplar)
+                                {
+                                    if (item.Durum == "Açık")
+                                    {
+                                        <tr>
+                                            <td>@item.HesapNo</td>
+                                            <td>@item.Bakiye</td>
+                                            <td class="text-right py-0 align-middle">
+                                                <div class="btn-group btn-group-sm">
+                                                    @*<input id="item_CheckerApproved_@item.HesapNo" type="radio" value="@item.HesapNo" name="AliciHesapNo">*@
+
+                                                    @Html.RadioButton("GonderenHesapNo", @item.HesapNo)
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                }
+                            }
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-body">
+                <input type="button" id="Virman" class="btn btn-success" value="Gönder" />
+            </div>
+        </form>
+    </section>
+</div>
+@Html.Hidden("RedirectTo", Url.Action("Index", "Kullanici"));
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+
+    $("#Virman").click(function () {
+        var gonderenNo = $("input[name=GonderenHesapNo]:checked").val();
+        var aliciNo = $("input[name=AliciHesapNo]:checked").val();
+        var Miktar = $("#miktar").val();
+        var url = $("#RedirectTo").val();
+        $.ajax({
+            url: "http://localhost:54117/api/Hesap/Virman?GonderenNo=" + aliciNo + "&AliciNo=" + gonderenNo + "&Miktar=" + Miktar,
+            type: "PUT",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer @Globals.token.access_token');
+            },
+            crossDomain: true,
+            success: function (result) {
+                alert("Para Transferi Gerçekleştirildi..")
+                window.location.href = url;
+
+            },
+            error: function (xhr, status, error) {
+                alert(status + " " + error);
+            }
+        });
+    });
+
+</script>

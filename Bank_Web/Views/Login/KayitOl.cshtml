@@ -108,9 +108,8 @@
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button id="kayıtol" class="login100-form-btn">
-                                Kayıt Ol
-                            </button>
+                            <input type="button" id="kayitol" class="login100-form-btn" value="Kayıt Ol"/>
+                         
                         </div>
 
 
@@ -143,44 +142,37 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.3.1.js"></script>
     <script>
-        $("#kayıtol").click(function () {
-            var TCKN = $("#tc").val();
-            var pass = $("#sifre").val();
-            var ad = $("#ad").val();
-            var soyad = $("#soyad").val();
-            var dogumTarihi = $("#tarih").val();
-            var telefonNumarasi = $("#tel").val();
-            var adres = $("#adres").val();
-            var email = $("#email").val();
+        $("#kayitol").click(function () {
+  
 
+            var user = new Object();
+            user.Ad = $("#ad").val();
+            user.Soyad = $("#soyad").val();
+            user.TcKimlik = $("#tc").val();
+            user.Telefon = $("#tel").val();
+            user.Parola = $("#sifre").val();
+            user.Adres = $("#adres").val();
+            user.Email = $("#email").val();
+            user.DogumTarihi = $("#tarih").val();
             $.ajax({
                 type: "POST",
-                url: "https://bankappapi.azurewebsites.net/api/Musteri",
-                data: {
-                    TcKimlik: TCKN,
-                    Ad: ad,
-                    Soyad: soyad,
-                    DogumTarihi: dogumTarihi,
-                    Adres: adres,
-                    Telefon: telefonNumarasi,
-                    Email: email,
-                    Parola: pass,
-                },
-                dataType: 'json',
-                crossDomain: true,
-                contentType: 'application/json',
+                url: "http://localhost:54117/api/Musteri",
+                data: user,
+                contentType: 'application/x-www-form-urlencoded',
                 success: function () {
 
                     alert("Başarılı");
                 },
-                error: function (err) {
-                    alert(err);
+
+                error: function (xhr, status, error) {
+                    alert(user.DogumTarihi)
+                    console.log("error= " + error + "status= " + status, "xhr= " + xhr);
                 }
             });
         });
     </script>
 
-    <script>
+    @*<script>
 
         $(document).ready(function () {
             $("#ad").keypress(function (evt) {
@@ -247,7 +239,7 @@
                  nesne1.focus();
              }
          }
-     </script>
+     </script>*@
 
 </body>
 </html>

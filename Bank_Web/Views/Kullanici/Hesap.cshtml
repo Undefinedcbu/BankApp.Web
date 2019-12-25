@@ -1,66 +1,117 @@
-﻿@{
+﻿@using Bank_Web.Models
+
+@{
     ViewBag.Title = "Hesap";
     Layout = "~/Views/Shared/_Kullanici_Layout.cshtml";
 }
 
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1>Hesap İşlemleri</h1>
-                        </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li <a href="#" class="btn btn-sm btn-success">
-                                     <i class="fas fa-plus"></i> Yeni Hesap Aç
-                                    </a>
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div><!-- /.container-fluid -->
-            </section>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Hesap İşlemleri</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li>
+                            <input type="button" id="HesapAc" class="btn btn-sm btn-success" value="Yeni Hesap Aç" />
 
-            <!-- Main content -->
-            <section class="content">
 
-                <!-- Default box -->
-                <div class="card card-solid">
-                    <div class="card-body pb-0">
-                        <div class="row d-flex align-items-stretch">
-                            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
-                                <div class="card bg-light">
-                                    <div class="card-header text-muted border-bottom-0">
-                                        Digital Strategist
-                                    </div>
-                                    <div class="card-body pt-0">
-                                        <div class="row">
-                                            <div class="col-7">
-                                                <h2 class="lead"><b>Nicole Pearson</b></h2>
-                                                <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
-                                                <ul class="ml-4 mb-0 fa-ul text-muted">
-                                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
-                                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-5 text-center">
-                                                <img src="~/KullaniciT/dist/img/user1-128x128.jpg" alt="" class="img-circle img-fluid">
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- Default box -->
+        <div class="card card-solid">
+            <div class="card-body pb-0">
+                <div class="row d-flex align-items-stretch">
+
+
+
+
+
+                    @if (Globals.musteri.Hesaplar != null)
+                    {
+                        foreach (var item in Globals.musteri.Hesaplar)
+                        {
+                            if (item.Durum == "Açık")
+                            {
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="card bg-light">
+                                        <div class="card-header text-muted border-bottom-0">
+                                            @item.HesapNo
+                                        </div>
+                                        <div class="card-body pt-0">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h2 class="lead"><b>Bakiyeniz</b></h2>
+
+                                                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                        <li><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>@item.Bakiye </li>
+
+                                                    </ul>
+                                                </div>
+
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="text-right">
-                                            <a href="#" class="btn btn-sm btn-danger">
-                                                <i class="fas fa-close"></i> Hesap Kapat
-                                            </a>
+                                        <div class="card-footer">
+                                            <div class="text-right">
+                                                @Html.ActionLink("Hesap Kapat", "HesapKapat", new { id = item.HesapID }, new { role = "button", @class = "btn btn-sm btn-danger", @style = "color:white" })
+                                                @{
+                                                    var cus_id = "Hesap_" + @item.HesapID;
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>                                       
-                </div>               
-            </section>            
-        </div>  
+                            }
+
+                        }
+                    }
+
+                    <input type="hidden" id="count" />
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+@Html.Hidden("RedirectTo", Url.Action("Index", "Kullanici"));
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+
+    $("#HesapAc").click(function () {
+       
+        var url = $("#RedirectTo").val();
+        $.ajax({
+            url: "http://localhost:54117/api/Hesap?id=" +@Globals.musteri.MusteriID+"&ek=" +@Globals.testModel.Hesaplar.Count+1,
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer @Globals.token.access_token');
+            },
+            crossDomain: true,
+            success: function (result) {
+                alert("Hesap Açıldı..")
+                window.location.href = url;
+
+            },
+            error: function (xhr, status, error) {
+                alert(status + " " + error);
+            }
+        });
+    });
+
+</script>

@@ -1,4 +1,4 @@
-﻿
+﻿@using Bank_Web.Models
 @{
     ViewBag.Title = "Fatura";
     Layout = "~/Views/Shared/_Kullanici_Layout.cshtml";
@@ -25,11 +25,11 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Abone Numarası</label>
-                    <input type="Number" min="1" class="form-control" id="exampleInputEmail1" placeholder="Abone Numarası Giriniz">
+                    <input type="Number" min="1" class="form-control" id="borcSorgula" placeholder="Abone Numarası Giriniz">
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn btn-success">Sorgula</button>
+                <input type="button" value="Sorgula" onclick="location.href='@Url.Action("Fatura", "Kullanici")?AboneNo='+$('#borcSorgula').val()" class="btn btn-success" />
             </div>
 
             <div class="card card-info">
@@ -53,13 +53,21 @@
                         <tbody>
 
                             <tr>
-                                <td>Abone Numarası</td>
-                                <td>173 Tl</td>
-                                <td class="text-right py-0 align-middle">
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="#" class="btn btn-success"><i class="fas fa-plus"></i>   Seç</a>
-                                    </div>
-                                </td>
+                                @if (Globals.musteri.Fatura != null)
+                                {
+                                    if (Globals.musteri.Fatura.MusteriID == Globals.musteri.MusteriID)
+                                    {
+                                        <td>@Globals.musteri.Fatura.AboneNo</td>
+                                        <td>@Globals.musteri.Fatura.Borc</td>
+                                        <td class="text-right py-0 align-middle">
+                                            <div class="btn-group btn-group-sm">
+                                                @Html.RadioButton("BorcNo", @Globals.musteri.Fatura.AboneNo)
+                                            </div>
+                                        </td>
+                                    }
+
+                                }
+
 
                         </tbody>
                     </table>
@@ -86,26 +94,67 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Hesap Numarası</td>
-                                <td>173 Tl</td>
-                                <td class="text-right py-0 align-middle">
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="#" class="btn btn-success"><i class="fas fa-plus"></i>   Seç</a>
-                                    </div>
-                                </td>
+                            @if (Globals.musteri.Hesaplar != null)
+                            {
+                                foreach (var item in Globals.musteri.Hesaplar)
+                                {
+                                    if (item.Durum == "Açık")
+                                    {
+                                        <tr>
+                                            <td>@item.HesapNo</td>
+                                            <td>@item.Bakiye</td>
+                                            <td class="text-right py-0 align-middle">
+                                                <div class="btn-group btn-group-sm">
+                                                    @Html.RadioButton("GonderenHesapNo", @item.HesapNo)
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
 
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="card-body">
-                <button type="submit" class="btn btn-success">Fatura Öde</button>
+                <input type="button" id="BorcOde" value="Fatura Öde" class="btn btn-success"/>
             </div>
         </form>
     </section>
 </div>
-           
+
+@Html.Hidden("RedirectTo", Url.Action("Index", "Kullanici"));
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+
+    $("#BorcOde").click(function () {
+        var aboneNo = $("input[name=BorcNo]:checked").val();
+        var gonderenNo = $("input[name=GonderenHesapNo]:checked").val();
+        var url = $("#RedirectTo").val();
+        $.ajax({
+            url: "http://localhost:54117/api/Odeme?AboneNo="+aboneNo+"&HesapNo="+gonderenNo,
+            type: "POST",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', 'Bearer @Globals.token.access_token');
+            },
+            crossDomain: true,
+            success: function (result) {
+                alert("Borç Ödendi..")
+                window.location.href = url;
+
+            },
+            error: function (xhr, status, error) {
+                alert(status + " " + error);
+            }
+        });
+    });
+
+</script>
+
 
 
 

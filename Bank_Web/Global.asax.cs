@@ -1,3 +1,4 @@
+using Bank_Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Bank_Web
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
