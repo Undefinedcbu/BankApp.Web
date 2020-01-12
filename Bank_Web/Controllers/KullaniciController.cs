@@ -61,6 +61,10 @@ namespace Bank_Web.Controllers
 
             return View();
         }
+        public ActionResult Kredi()
+        {
+            return View();
+        }
     }
     
 }

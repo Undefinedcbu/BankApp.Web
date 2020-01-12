@@ -2133,6 +2133,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_sidebar.cshtml" />
     <Content Include="Views\Home\asd.cshtml" />
+    <Content Include="Views\Kullanici\Kredi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
